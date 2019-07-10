@@ -3,7 +3,31 @@ import QtQuick.Window 2.12
 
 Window {
     visible: true
-    width: 640
-    height: 480
+    width: 512
+    height: 768
     title: qsTr("Hello World")
+    maximumWidth: 512
+    maximumHeight: 768
+    minimumWidth: 512
+    minimumHeight: 768
+
+    BgComponent {
+        id: bg
+    }
+
+    HeroSprite {
+        id: hero
+        x: 0
+        y: 0
+      //  width: 78
+     //   height: 68
+    }
 }
+
+
+
+
+/*##^## Designer {
+    D{i:1;anchors_height:100;anchors_width:100;anchors_x:228;anchors_y:181}
+}
+ ##^##*/

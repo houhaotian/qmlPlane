@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>images/img_bg_level_1.jpg</file>
+        <file>images/img_plane_main.png</file>
+        <file>HeroSprite.qml</file>
+        <file>BgComponent.qml</file>
     </qresource>
 </RCC>
