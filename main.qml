@@ -17,17 +17,18 @@ Window {
 
     HeroSprite {
         id: hero
-        x: 0
+        x: 217
+        y: 563
+    }
+    EnemySprite {
+        id: enemy
+        x: 186
         y: 0
-      //  width: 78
-     //   height: 68
     }
 }
 
-
-
-
 /*##^## Designer {
-    D{i:1;anchors_height:100;anchors_width:100;anchors_x:228;anchors_y:181}
+    D{i:1;anchors_height:100;anchors_width:100;anchors_x:228;anchors_y:181}D{i:3;anchors_height:141;anchors_width:248;anchors_x:154;anchors_y:475}
 }
  ##^##*/
+

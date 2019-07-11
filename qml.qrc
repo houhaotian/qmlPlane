@@ -5,5 +5,8 @@
         <file>images/img_plane_main.png</file>
         <file>HeroSprite.qml</file>
         <file>BgComponent.qml</file>
+        <file>images/img_ui.png</file>
+        <file>EnemySprite.qml</file>
+        <file>images/img_plane_enemy.png</file>
     </qresource>
 </RCC>

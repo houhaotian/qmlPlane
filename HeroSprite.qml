@@ -11,10 +11,15 @@ Item {
 
     SpriteSequence {
         id: hero
+        property real xx: 0
+        property real yy: 0
+
         width: 80 //sprite的size可能要根据具体模型动态改变
         height: 65
         interpolate: false
         running: false
+        focus: true
+
         sprites: [
             Sprite {
                 name: "hero1"
@@ -27,27 +32,32 @@ Item {
             }
         ]
     }
-    focus: true
+
     Keys.onPressed: {
+        //        console.log(hero.x, hero.y)
         switch (event.key) {
         case Qt.Key_Up:
-            if (hero.y <= 0)
+            if (hero.yy <= 0)
                 break
             hero.y -= 10
+            hero.yy -= 10
             break
         case Qt.Key_Down:
-            if (hero.y >= parent.height - hero.height)
+            if (hero.yy >= parent.height - hero.height)
                 break
+            hero.yy += 10
             hero.y += 10
             break
         case Qt.Key_Left:
-            if (hero.x <= 0)
+            if (hero.xx <= 0)
                 break
+            hero.xx -= 10
             hero.x -= 10
             break
         case Qt.Key_Right:
-            if (hero.x >= parent.width - hero.width)
+            if (hero.xx >= parent.width - hero.width)
                 break
+            hero.xx += 10
             hero.x += 10
             break
         default:
@@ -56,9 +66,15 @@ Item {
     }
     Keys.onReleased: hero.running = false
 
-    property int lives: 4
+    property int lives: 0
 
-    Component.onCompleted: lives = 0
+    Component.onCompleted: {
+        lives = 4
+
+        var point = hero.mapToItem(parent, 0, 0)
+        hero.xx = point.x
+        hero.yy = point.y
+    }
 }
 
 /*##^## Designer {
