@@ -8,5 +8,6 @@
         <file>images/img_ui.png</file>
         <file>EnemySprite.qml</file>
         <file>images/img_plane_enemy.png</file>
+        <file>logical.js</file>
     </qresource>
 </RCC>
