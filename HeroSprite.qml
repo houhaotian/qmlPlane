@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Particles 2.12
 
 Item {
     visible: true
@@ -8,6 +9,8 @@ Item {
         visible: false
         source: "images/img_plane_main.png"
     }
+    //英雄属性
+    property int lives: 0
 
     SpriteSequence {
         id: hero
@@ -31,6 +34,43 @@ Item {
                 frameRate: 10
             }
         ]
+    }
+
+    ParticleSystem {
+        id: particleSys
+    }
+    ImageParticle {
+        source: "qrc:/images/particle1.png"
+        system: particleSys
+        entryEffect: ImageParticle.Fade
+    }
+    Emitter {
+        id: emitter
+        x: hero.x + 33
+        y: hero.y + hero.height + 5
+        width: 2
+        height: 10
+        system: particleSys
+        emitRate: 200
+        lifeSpan: 50
+        acceleration: PointDirection {
+            x: 0
+            y: 30
+        }
+    }
+    Emitter {
+        id: emitter2
+        x: hero.x + 42
+        y: hero.y + hero.height + 5
+        width: 2
+        height: 10
+        system: particleSys
+        emitRate: 200
+        lifeSpan: 50
+        acceleration: PointDirection {
+            x: 0
+            y: 30
+        }
     }
 
     Keys.onPressed: {
@@ -65,8 +105,6 @@ Item {
         }
     }
     Keys.onReleased: hero.running = false
-
-    property int lives: 0
 
     Component.onCompleted: {
         lives = 4

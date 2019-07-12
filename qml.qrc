@@ -9,5 +9,6 @@
         <file>EnemySprite.qml</file>
         <file>images/img_plane_enemy.png</file>
         <file>logical.js</file>
+        <file>images/particle1.png</file>
     </qresource>
 </RCC>
