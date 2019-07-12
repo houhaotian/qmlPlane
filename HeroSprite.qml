@@ -38,43 +38,43 @@ Item {
 
     ParticleSystem {
         id: particleSys
-    }
-    ImageParticle {
-        source: "qrc:/images/particle1.png"
-        system: particleSys
-        entryEffect: ImageParticle.Fade
-    }
-    Emitter {
-        id: emitter
-        x: hero.x + 33
-        y: hero.y + hero.height + 5
-        width: 2
-        height: 10
-        system: particleSys
-        emitRate: 200
-        lifeSpan: 50
-        acceleration: PointDirection {
-            x: 0
-            y: 30
+
+        ImageParticle {
+            source: "qrc:/images/particle1.png"
+            system: particleSys
+            entryEffect: ImageParticle.Fade
         }
-    }
-    Emitter {
-        id: emitter2
-        x: hero.x + 42
-        y: hero.y + hero.height + 5
-        width: 2
-        height: 10
-        system: particleSys
-        emitRate: 200
-        lifeSpan: 50
-        acceleration: PointDirection {
-            x: 0
-            y: 30
+        Emitter {
+            id: emitter
+            x: hero.x + 33
+            y: hero.y + hero.height + 5
+            width: 2
+            height: 10
+            system: particleSys
+            emitRate: 200
+            lifeSpan: 50
+            acceleration: PointDirection {
+                x: 0
+                y: 30
+            }
+        }
+        Emitter {
+            id: emitter2
+            x: hero.x + 42
+            y: hero.y + hero.height + 5
+            width: 2
+            height: 10
+            system: particleSys
+            emitRate: 200
+            lifeSpan: 50
+            acceleration: PointDirection {
+                x: 0
+                y: 30
+            }
         }
     }
 
     Keys.onPressed: {
-        //        console.log(hero.x, hero.y)
         switch (event.key) {
         case Qt.Key_Up:
             if (hero.yy <= 0)

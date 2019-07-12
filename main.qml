@@ -20,11 +20,25 @@ Window {
         x: 217
         y: 563
     }
+
     EnemySprite {
         id: enemy
         x: 186
         y: 0
     }
+
+    Timer{
+        interval: 2000
+        repeat: true
+        onTriggered: {
+            enemy.createEnemy()
+        }
+    }
+
+    function createEnemy() {
+
+    }
+
 }
 
 /*##^## Designer {
