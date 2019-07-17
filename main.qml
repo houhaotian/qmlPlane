@@ -3,10 +3,8 @@ import QtQuick.Window 2.12
 import "logical.js" as Logic
 
 Window {
-
-    property var enemies
-
     id: root
+
     visible: true
     width: 512
     height: 768
@@ -16,15 +14,15 @@ Window {
     minimumWidth: 512
     minimumHeight: 768
 
+    GameCanvas {
+        id: canvas
+        anchors.fill: parent
+        z:100
+    }
+
     BgComponent {
         id: bg
     }
-
-//    HeroSprite {
-//        id: hero
-//        x: 217
-//        y: 563
-//    }
 
     //    EnemySprite {
     //        id: enemy
@@ -32,11 +30,6 @@ Window {
     //        y: 0
     //    }
     Component.onCompleted: {
-        enemies = new Array(100)
-        var hero=Qt.createComponent("HeroSprite.qml")
-        hero.createObject()
-        hero.x=217
-        hero.y=563
 
     }
     Timer {
@@ -49,8 +42,8 @@ Window {
             //            enemies.push(enemy)
             //            enemy.x=180
             //            enemy.y=0
-            var enemy = Qt.createComponent("EnemySprite.qml")
-            enemy.createObject()
+            //            var enemy = Qt.createComponent("EnemySprite.qml")
+            //            enemy.createObject()
         }
     }
 }

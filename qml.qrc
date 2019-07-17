@@ -10,5 +10,6 @@
         <file>images/img_plane_enemy.png</file>
         <file>logical.js</file>
         <file>images/particle1.png</file>
+        <file>GameCanvas.qml</file>
     </qresource>
 </RCC>
