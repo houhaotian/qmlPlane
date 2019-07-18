@@ -7,7 +7,7 @@ var gameCanvas
 
 function newGame(canvas) {
     gameCanvas = canvas
-    gameCanvas.enemies = new Array()
+    gameCanvas.enemies = new Array
 }
 
 function createHero() {
@@ -15,20 +15,29 @@ function createHero() {
                           "x": 217,
                           "y": 563
                       })
+    return hero
 }
 
 function createEnemy() {
-
-    var Cox = Math.ceil(Math.random() * gameCanvas.width)// - enemy.width
-    enemy.createObject(gameCanvas,{
-                        //   "x":Cox,
-                        //   "y":0
-                       })
-
-
-    gameCanvas.enemies.push(enemy)
+    var Cox = Math.ceil(Math.random() * gameCanvas.width)
+    var e = enemy.createObject(gameCanvas, {
+                                   "x": Cox,
+                                   "y": 0
+                               })
+    gameCanvas.enemies.push(e)
+    return enemy
 }
 
 function timerTask() {
     createEnemy()
+
+    for(var i = 0; i < gameCanvas.enemies.length; i++)
+    {
+        var e = gameCanvas.enemies[i]
+        if(e.isOutOfBoundry())
+        {
+            gameCanvas.enemies.splice(i, 1)
+            e.die()
+        }
+    }
 }

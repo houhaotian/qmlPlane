@@ -1,3 +1,13 @@
+/**************************************************************
+*   main.qml中放置了GameCanvas类。
+*   所有精灵都在GameCanvas类中管理。
+*   GameCanvas本身是覆盖window上层的。可当做一个layer
+*   判断逻辑尽量写在logical.js中
+*
+*
+*
+*
+**************************************************************/
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import "logical.js" as Logic
@@ -24,27 +34,8 @@ Window {
         id: bg
     }
 
-    //    EnemySprite {
-    //        id: enemy
-    //        x: 186
-    //        y: 0
-    //    }
     Component.onCompleted: {
 
-    }
-    Timer {
-        interval: 2000
-        repeat: true
-        running: true
-        onTriggered: {
-
-            //            var enemy = Logic.createEnemy()
-            //            enemies.push(enemy)
-            //            enemy.x=180
-            //            enemy.y=0
-            //            var enemy = Qt.createComponent("EnemySprite.qml")
-            //            enemy.createObject()
-        }
     }
 }
 
