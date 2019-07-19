@@ -136,13 +136,6 @@ Item {
         }
     }
 
-    function isOutOfBoundry() {
-        if (x < 0 || x > parent.width - width || y < 0 || y > parent.height - height)
-            return true
-        else
-            return false
-    }
-
     function die() {
         destroy(350)
     }

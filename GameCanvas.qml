@@ -6,18 +6,44 @@ Item {
     id: canvas
     property var hero
     property var enemies
+    property var heroBullets
 
-    Timer {
-        interval: 2000
+    //主任务
+    Timer{
+        interval: 1000
         repeat: true
         running: true
         onTriggered: {
             Logic.timerTask()
         }
     }
+    //创建敌机
+    Timer {
+        interval: 2000
+        repeat: true
+        running: true
+        onTriggered: {
+            Logic.createEnemy()
+        }
+    }
+    //创建英雄子弹
+    Timer{
+        id:heroBulletCreate
+        interval: 500
+        repeat: true
+        running: false
+        onTriggered: {
+            Logic.createHeroBullet()
+        }
+    }
+
+    function createHeroBullet(){
+        heroBulletCreate.running = true
+    }
 
     Component.onCompleted: {
         Logic.newGame(canvas)
-        Logic.createHero()
+        hero = Logic.createHero()
+        createHeroBullet()
     }
 }

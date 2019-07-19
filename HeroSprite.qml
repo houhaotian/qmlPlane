@@ -82,6 +82,7 @@ Item {
         }
     }
 
+
     Keys.onPressed: {
         switch (event.key) {
         case Qt.Key_Up:

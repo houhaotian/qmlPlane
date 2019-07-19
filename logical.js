@@ -5,11 +5,12 @@ var enemy = Qt.createComponent("EnemySprite.qml")
 var hero = Qt.createComponent("HeroSprite.qml")
 var gameCanvas
 
-var heroBullet = Qt.createComponent("BulletSprite.qml")
+var bullet = Qt.createComponent("BulletSprite.qml")
 
 function newGame(canvas) {
     gameCanvas = canvas
     gameCanvas.enemies = new Array
+    gameCanvas.heroBullets = new Array
 }
 
 function createHero() {
@@ -31,21 +32,36 @@ function createEnemy() {
 }
 
 function timerTask() {
-    createEnemy()
-
     for (var i = 0; i < gameCanvas.enemies.length; i++) {
         var e = gameCanvas.enemies[i]
-        if (e.isOutOfBoundry()) {
+        if (isOutOfBoundry(e)) {
             gameCanvas.enemies.splice(i, 1)
             e.die()
         }
     }
+    for (var j = 0; j < gameCanvas.heroBullets.length; j++) {
+        var b = gameCanvas.heroBullets[j]
+        if (isOutOfBoundry(b)) {
+            gameCanvas.heroBullets.splice(j, 1)
+            b.destroy(350)
+        }
+    }
 }
 
-function createBullet() {
-   var h = heroBullet.createObject(gameCanvas, {
-                                "x": 0,
-                                "y": 0
-                            })
+function createHeroBullet() {
+    var h = bullet.createObject(gameCanvas, {
+                                        "x": gameCanvas.hero.x + 22,
+                                        "y": gameCanvas.hero.y - 20
+                                    })
+    h.createHeroBullet()
+    gameCanvas.heroBullets.push(h)
+    //   h.createEnemyBullet()
     return h
+}
+
+function isOutOfBoundry(sprite){
+    if (sprite.x < 0 || sprite.x > gameCanvas.width - sprite.width || sprite.y < 0 || sprite.y > gameCanvas.height - sprite.height)
+        return true
+    else
+        return false
 }

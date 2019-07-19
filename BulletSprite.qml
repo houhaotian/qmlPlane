@@ -10,11 +10,11 @@ Item {
 
     SpriteSequence {
         id: heroBullet
-        width: 24
-        height: 81
-        visible: true
+        width: 15
+        height: 25
+        visible: false
         running: false
-        sprites: [hero, enemey1]
+        sprites: hero
     }
 
     Sprite {
@@ -23,19 +23,21 @@ Item {
         source: imgModule.source
         frameCount: 1
         frameWidth: 25
-        frameHeight: 100
+        frameHeight: 36
         frameX: 733
         frameY: 676
         frameRate: 10
-
-        NumberAnimation {
-            target: hero
-            property: "y"
-            duration: 200
-            //easing.type: Easing.InOutQuad
-            to: 0
-        }
     }
+
+    SpriteSequence {
+        id: enemyBullet
+        width: 24
+        height: 81
+        visible: false
+        running: false
+        sprites: enemey1
+    }
+
 
     Sprite {
         id: enemey1
@@ -49,8 +51,20 @@ Item {
         frameRate: 10
     }
 
-    function createBullet(){
-        heroBullet.jumpTo("enemyBullet1")
+    function createHeroBullet(){
+        heroBullet.visible = true
+        heroBulletAni.start()
+    }
+
+    function createEnemyBullet(){
+        enemyBullet.visible = true
+    }
+
+    NumberAnimation on y{
+        id: heroBulletAni
+        running: false
+        duration: 1200
+        to: 0 - heroBullet.height
     }
 }
 
