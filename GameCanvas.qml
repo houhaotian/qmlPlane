@@ -29,7 +29,7 @@ Item {
     //创建英雄子弹
     Timer{
         id:heroBulletCreate
-        interval: 500
+        interval: 200
         repeat: true
         running: false
         onTriggered: {

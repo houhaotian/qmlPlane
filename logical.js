@@ -53,8 +53,15 @@ function createHeroBullet() {
                                         "x": gameCanvas.hero.x + 22,
                                         "y": gameCanvas.hero.y - 20
                                     })
+    var h2 = bullet.createObject(gameCanvas, {
+                                    "x": gameCanvas.hero.x + 42,
+                                    "y": gameCanvas.hero.y - 20
+                                })
     h.createHeroBullet()
+    h2.createHeroBullet()
     gameCanvas.heroBullets.push(h)
+    gameCanvas.heroBullets.push(h2)
+
     //   h.createEnemyBullet()
     return h
 }
