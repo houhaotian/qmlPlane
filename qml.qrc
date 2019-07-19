@@ -11,5 +11,7 @@
         <file>logical.js</file>
         <file>images/particle1.png</file>
         <file>GameCanvas.qml</file>
+        <file>images/img_bullet.png</file>
+        <file>BulletSprite.qml</file>
     </qresource>
 </RCC>
