@@ -6,8 +6,7 @@ Item {
     visible: true
     width: 80 //sprite的size可能要根据具体模型动态改变
     height: 65
-    property real xx: 0
-    property real yy: 0
+
     //英雄属性
     property int lives: 0
 
@@ -23,6 +22,9 @@ Item {
         id: mouseArea
         anchors.fill: parent
         drag.target: parent
+        onPositionChanged: {
+            stayWhereUAre()
+        }
     }
 
     SpriteSequence {
@@ -82,45 +84,41 @@ Item {
         }
     }
 
+    //当英雄要超出屏幕时，使其停在那
+    function stayWhereUAre() {
+        if (hero.y <= 0)
+            hero.y = 0
+        if (hero.y >= parent.height - hero.height)
+            hero.y = parent.height - hero.height
+        if (hero.x <= 0)
+            hero.x = 0
+        if (hero.x >= parent.width - hero.width)
+            hero.x = parent.width - hero.width
+    }
 
     Keys.onPressed: {
         switch (event.key) {
-        case Qt.Key_Up:
-            if (hero.yy <= 0)
-                break
-            hero.y -= 10
-            hero.yy -= 10
-            break
-        case Qt.Key_Down:
-            if (hero.yy >= parent.height - hero.height)
-                break
-            hero.yy += 10
-            hero.y += 10
-            break
         case Qt.Key_Left:
-            if (hero.xx <= 0)
-                break
-            hero.xx -= 10
             hero.x -= 10
             break
+        case Qt.Key_Up:
+            hero.y -= 10
+            break
         case Qt.Key_Right:
-            if (hero.xx >= parent.width - hero.width)
-                break
-            hero.xx += 10
             hero.x += 10
+            break
+        case Qt.Key_Down:
+            hero.y += 10
             break
         default:
             return
         }
+        stayWhereUAre()
     }
     Keys.onReleased: heroSprite.running = false
 
     Component.onCompleted: {
         lives = 4
-
-        var point = hero.mapToItem(parent, 0, 0)
-        hero.xx = point.x
-        hero.yy = point.y
     }
 }
 
