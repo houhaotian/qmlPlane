@@ -109,7 +109,7 @@ Item {
     NumberAnimation on y {
         from: 0
         to: parent.height + width
-        duration: 2000
+        duration: 4000
         easing.type: Easing.InOutCubic
         easing.amplitude: 2.0
         easing.period: 1.5

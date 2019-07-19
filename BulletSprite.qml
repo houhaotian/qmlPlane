@@ -63,8 +63,8 @@ Item {
     NumberAnimation on y{
         id: heroBulletAni
         running: false
-        duration: 1200
-        to: 0 - heroBullet.height
+        duration: 3000
+        to: -parent.height
     }
 }
 

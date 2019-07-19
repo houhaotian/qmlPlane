@@ -27,11 +27,12 @@ Window {
     GameCanvas {
         id: canvas
         anchors.fill: parent
-        z:100
+        z:1
     }
 
     BgComponent {
         id: bg
+        z:0
     }
 
     Component.onCompleted: {
