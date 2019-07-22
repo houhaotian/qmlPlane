@@ -1,5 +1,5 @@
-.import QtQuick 2.12 as Qute
-.import QtQml 2.12 as Qml
+.import QtQuick 2.0 as Qute
+.import QtQml 2.0 as Qml
 
 var enemy = Qt.createComponent("EnemySprite.qml")
 var hero = Qt.createComponent("HeroSprite.qml")
