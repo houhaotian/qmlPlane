@@ -37,7 +37,7 @@ function timerTask() {
         if (isOutOfBoundry(e)) {
             gameCanvas.enemies.splice(i, 1)
             e.die()
-        }
+        }       
     }
     for (var j = 0; j < gameCanvas.heroBullets.length; j++) {
         var b = gameCanvas.heroBullets[j]
@@ -66,6 +66,7 @@ function createHeroBullet() {
     return h
 }
 
+//这么设计是因为所有sprite都能用到
 function isOutOfBoundry(sprite){
     if (sprite.x < 0 || sprite.x > gameCanvas.width - sprite.width || sprite.y < 0 || sprite.y > gameCanvas.height - sprite.height)
         return true

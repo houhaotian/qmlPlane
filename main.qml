@@ -24,19 +24,14 @@ Window {
     minimumWidth: 512
     minimumHeight: 768
 
-    GameCanvas {
-        id: canvas
-        anchors.fill: parent
-        z:1
-    }
-
     BgComponent {
         id: bg
         z:0
     }
-
-    Component.onCompleted: {
-
+    GameCanvas {
+        id: canvas
+        anchors.fill: parent
+        z:2
     }
 }
 

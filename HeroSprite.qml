@@ -118,7 +118,7 @@ Item {
     Keys.onReleased: heroSprite.running = false
 
     Component.onCompleted: {
-        lives = 4
+        lives = 5
     }
 }
 

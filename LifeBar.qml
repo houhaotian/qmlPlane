@@ -1,40 +1,30 @@
 import QtQuick 2.0
 
 Item {
-    Item {
-        id: img
-        clip: true
-        width:65
-        height:74
-        visible: true
-        Image {
-            source: "qrc:/images/ui_new_showicon_png.png"
-            x:-403
-            y:-285
-        }
-    }
-
+    width: 35 * 5
+    height: 30
     Row {
-        //       anchors.left: parent.left
-        //     anchors.leftMargin: 10
-        x:100
-        y:100
+        anchors.fill: parent
         spacing: 5
         Repeater {
-            id: rep
+            id: rpt
             model: 5
-            delegate: Item {
-                id: a1
-                clip: true
-                width:65
-                height:74
-                visible: true
-                Image {
-                    source: "qrc:/images/ui_new_showicon_png.png"
-                    x:-403
-                    y:-285
-                }
+            delegate: Image {
+                id: img
+                width: 30
+                height: 30
+                source: "qrc:/images/lifeLogo.png"
             }
         }
     }
+
+    function setLivesCount(count) {
+        rpt.model = count
+    }
 }
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/
+
