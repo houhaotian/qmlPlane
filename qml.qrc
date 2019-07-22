@@ -13,5 +13,7 @@
         <file>GameCanvas.qml</file>
         <file>images/img_bullet.png</file>
         <file>BulletSprite.qml</file>
+        <file>images/ui_new_showicon_png.png</file>
+        <file>LifeBar.qml</file>
     </qresource>
 </RCC>
