@@ -32,8 +32,8 @@ function createEnemy() {
 }
 
 function killhero(){
-    hero.lives -= 1
-    if(hero.lives <= 0){
+    gameCanvas.hero.lives -= 1
+    if(gameCanvas.hero.lives <= 0){
         console.log("gameOver!")
         return //gameOver
     }
@@ -46,7 +46,7 @@ function timerTask() {
             gameCanvas.enemies.splice(i, 1)
             e.die()
         }
-        if(isCollided(hero, e)) {
+        if(isCollided(gameCanvas.hero, e)) {
             killhero()
         }
     }

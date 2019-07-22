@@ -28,6 +28,12 @@ Window {
         id: bg
         z:0
     }
+
+    LifeBar{
+        id: lifeBar
+        z:0
+    }
+
     GameCanvas {
         id: canvas
         anchors.fill: parent

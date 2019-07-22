@@ -8,7 +8,7 @@ Item {
         spacing: 5
         Repeater {
             id: rpt
-            model: 5
+            model: canvas.hero.lives
             delegate: Image {
                 id: img
                 width: 30

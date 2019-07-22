@@ -8,13 +8,9 @@ Item {
     property var enemies
     property var heroBullets
 
-    LifeBar{
-        id: lifeBar
-    }
-
     //主任务
     Timer{
-        interval: 1000
+        interval: 350
         repeat: true
         running: true
         onTriggered: {
@@ -49,6 +45,5 @@ Item {
         Logic.newGame(canvas)
         hero = Logic.createHero()
         createHeroBullet()
-        lifeBar.setLivesCount(hero.lives)
     }
 }
