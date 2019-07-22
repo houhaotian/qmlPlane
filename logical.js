@@ -31,13 +31,24 @@ function createEnemy() {
     return e
 }
 
+function killhero(){
+    hero.lives -= 1
+    if(hero.lives <= 0){
+        console.log("gameOver!")
+        return //gameOver
+    }
+}
+
 function timerTask() {
     for (var i = 0; i < gameCanvas.enemies.length; i++) {
         var e = gameCanvas.enemies[i]
         if (isOutOfBoundry(e)) {
             gameCanvas.enemies.splice(i, 1)
             e.die()
-        }       
+        }
+        if(isCollided(hero, e)) {
+            killhero()
+        }
     }
     for (var j = 0; j < gameCanvas.heroBullets.length; j++) {
         var b = gameCanvas.heroBullets[j]
@@ -72,4 +83,14 @@ function isOutOfBoundry(sprite){
         return true
     else
         return false
+}
+
+//碰撞检测。研究BOX2d
+function isCollided(sprite1, sprite2) {
+    if((sprite1.x <= sprite2.x && (sprite1.x + sprite1.width >=sprite2.x)) &&(sprite1.y<=sprite2.y && sprite1.y+sprite1.width>=sprite2.y))
+        return true;
+    else if((sprite2.x <= sprite1.x && (sprite2.x + sprite2.width >=sprite1.x)) &&(sprite2.y<=sprite1.y && sprite2.y+sprite2.width>=sprite1.y))
+        return true;
+    else
+        return false;
 }
