@@ -11,10 +11,11 @@ function newGame(canvas) {
     gameCanvas = canvas
     gameCanvas.enemies = new Array
     gameCanvas.heroBullets = new Array
+    gameCanvas.enemyBullets = new Array
 }
 
 function createHero() {
-    var h = hero.createObject(gameCanvas, {
+    let h = hero.createObject(gameCanvas, {
                           "x": 217,
                           "y": 563
                       })
@@ -22,8 +23,8 @@ function createHero() {
 }
 
 function createEnemy() {
-    var Cox = Math.ceil(Math.random() * gameCanvas.width)
-    var e = enemy.createObject(gameCanvas, {
+    let Cox = Math.ceil(Math.random() * gameCanvas.width)
+    let e = enemy.createObject(gameCanvas, {
                                    "x": Cox,
                                    "y": 0
                                })
@@ -41,16 +42,16 @@ function killhero(){
 
 function timerTask() {
     //轮询英雄子弹
-    for (var j = 0; j < gameCanvas.heroBullets.length; j++) {
-        var b = gameCanvas.heroBullets[j]
+    for (let j = 0; j < gameCanvas.heroBullets.length; j++) {
+        let b = gameCanvas.heroBullets[j]
         //销毁子弹,出界销毁延时350，提升性能
         if (isOutOfBoundry(b)) {
             gameCanvas.heroBullets.splice(j, 1)
             b.destroy(350)
         }
         //子弹击中敌机时，销毁each
-        for (var i = 0; i < gameCanvas.enemies.length; i++) {
-            var e = gameCanvas.enemies[i]
+        for (let i = 0; i < gameCanvas.enemies.length; i++) {
+            let e = gameCanvas.enemies[i]
             if (isCollided(b, e)) {
                 gameCanvas.heroBullets.splice(j, 1)
                 b.destroy()
@@ -62,8 +63,8 @@ function timerTask() {
     //再轮询敌机,处理敌机出界，与英雄碰撞情况
     //如将此次轮询放上面会导致英雄被频繁销毁
     //故暂且放在这再查询一遍
-    for (var i = 0; i < gameCanvas.enemies.length; i++) {
-        var e = gameCanvas.enemies[i]
+    for (let i = 0; i < gameCanvas.enemies.length; i++) {
+        let e = gameCanvas.enemies[i]
         if (isOutOfBoundry(e)) {
             gameCanvas.enemies.splice(i, 1)
             e.die(350)
@@ -76,21 +77,28 @@ function timerTask() {
 }
 
 function createHeroBullet() {
-    var h = bullet.createObject(gameCanvas, {
-                                        "x": gameCanvas.hero.x + 22,
-                                        "y": gameCanvas.hero.y - 20
-                                    })
-    var h2 = bullet.createObject(gameCanvas, {
-                                    "x": gameCanvas.hero.x + 42,
+    let b = bullet.createObject(gameCanvas, {
+                                    "x": gameCanvas.hero.x + 22,
                                     "y": gameCanvas.hero.y - 20
                                 })
-    h.createHeroBullet()
-    h2.createHeroBullet()
-    gameCanvas.heroBullets.push(h)
-    gameCanvas.heroBullets.push(h2)
+    let b2 = bullet.createObject(gameCanvas, {
+                                     "x": gameCanvas.hero.x + 42,
+                                     "y": gameCanvas.hero.y - 20
+                                 })
+    b.createHeroBullet()
+    b2.createHeroBullet()
+    gameCanvas.heroBullets.push(b)
+    gameCanvas.heroBullets.push(b2)
+}
 
-    //   h.createEnemyBullet()
-    return h
+function createEnemyBullet(e) {
+    let b = bullet.createObject(gameCanvas, {
+                                    "x": e.x + 22,
+                                    "y": e.y - 20
+                                })
+    b.createEnemyBullet()
+    gameCanvas.enemyBullets.push(b)
+    return b
 }
 
 //这么设计是因为所有sprite都能用到

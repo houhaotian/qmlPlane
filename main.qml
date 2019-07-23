@@ -10,7 +10,6 @@
 **************************************************************/
 import QtQuick 2.0
 import QtQuick.Window 2.0
-import "logical.js" as Logic
 
 Window {
     id: root

@@ -58,6 +58,7 @@ Item {
 
     function createEnemyBullet(){
         enemyBullet.visible = true
+         heroBulletAni.start()
     }
 
     NumberAnimation on y{

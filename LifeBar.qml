@@ -17,10 +17,6 @@ Item {
             }
         }
     }
-
-    function setLivesCount(count) {
-        rpt.model = count
-    }
 }
 
 /*##^## Designer {

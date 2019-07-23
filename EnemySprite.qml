@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import "logical.js" as Logic
 
 Item {
     id: enemy
@@ -109,7 +110,7 @@ Item {
     NumberAnimation on y {
         from: 0
         to: parent.height + width
-        duration: 4000
+        duration: 8000
         easing.type: Easing.InOutCubic
         easing.amplitude: 2.0
         easing.period: 1.5

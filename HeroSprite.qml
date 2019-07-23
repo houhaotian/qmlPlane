@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Particles 2.0
+import QtQml 2.0
+import "logical.js" as Logic
 
 Item {
     id: hero
