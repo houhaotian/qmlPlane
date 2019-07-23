@@ -137,7 +137,7 @@ Item {
     }
 
     function die() {
-        destroy(350)
+        destroy()
     }
 
     Component.onCompleted: {

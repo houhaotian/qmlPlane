@@ -40,21 +40,37 @@ function killhero(){
 }
 
 function timerTask() {
+    //轮询英雄子弹
+    for (var j = 0; j < gameCanvas.heroBullets.length; j++) {
+        var b = gameCanvas.heroBullets[j]
+        //销毁子弹,出界销毁延时350，提升性能
+        if (isOutOfBoundry(b)) {
+            gameCanvas.heroBullets.splice(j, 1)
+            b.destroy(350)
+        }
+        //子弹击中敌机时，销毁each
+        for (var i = 0; i < gameCanvas.enemies.length; i++) {
+            var e = gameCanvas.enemies[i]
+            if (isCollided(b, e)) {
+                gameCanvas.heroBullets.splice(j, 1)
+                b.destroy()
+                gameCanvas.enemies.splice(i, 1)
+                e.die()
+            }
+        }
+    }
+    //再轮询敌机,处理敌机出界，与英雄碰撞情况
+    //如将此次轮询放上面会导致英雄被频繁销毁
+    //故暂且放在这再查询一遍
     for (var i = 0; i < gameCanvas.enemies.length; i++) {
         var e = gameCanvas.enemies[i]
         if (isOutOfBoundry(e)) {
             gameCanvas.enemies.splice(i, 1)
+            e.die(350)
+        }
+        if (isCollided(gameCanvas.hero, e)) {
             e.die()
-        }
-        if(isCollided(gameCanvas.hero, e)) {
             killhero()
-        }
-    }
-    for (var j = 0; j < gameCanvas.heroBullets.length; j++) {
-        var b = gameCanvas.heroBullets[j]
-        if (isOutOfBoundry(b)) {
-            gameCanvas.heroBullets.splice(j, 1)
-            b.destroy(350)
         }
     }
 }
