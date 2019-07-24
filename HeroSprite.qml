@@ -8,7 +8,7 @@ Item {
     visible: true
     width: 80 //sprite的size可能要根据具体模型动态改变
     height: 65
-
+    scale: 0.8
     //英雄属性
     property int lives: 0
 

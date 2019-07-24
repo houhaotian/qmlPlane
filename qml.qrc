@@ -16,5 +16,9 @@
         <file>images/ui_new_showicon_png.png</file>
         <file>LifeBar.qml</file>
         <file>images/lifeLogo.png</file>
+        <file>SplashWindow.qml</file>
+        <file>images/LOGO.png</file>
+        <file>images/mainWindow.jpg</file>
+        <file>AboutWindow.qml</file>
     </qresource>
 </RCC>

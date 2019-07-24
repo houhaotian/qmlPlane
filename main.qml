@@ -1,3 +1,4 @@
+
 /**************************************************************
 *   main.qml中放置了GameCanvas类。
 *   所有精灵都在GameCanvas类中管理。
@@ -23,20 +24,38 @@ Window {
     minimumWidth: 512
     minimumHeight: 768
 
-    BgComponent {
-        id: bg
-        z:0
+    SplashWindow {
+        id: splash
+        anchors.fill: parent
+        z: 3
     }
 
-    LifeBar{
+    BgComponent {
+        id: bg
+        z: 0
+    }
+
+    LifeBar {
         id: lifeBar
-        z:0
+        z: 0
     }
 
     GameCanvas {
         id: canvas
         anchors.fill: parent
-        z:2
+        z: 2
+        Connections {
+            target: splash
+            onStartNewGame: {
+                canvas.startNewGame()
+                splash.visible = false
+                splash.state = "default"
+            }
+        }
+        onGameFailed:{
+            splash.visible = true
+            splash.showFailedSplash()
+        }
     }
 }
 

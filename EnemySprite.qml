@@ -1,12 +1,13 @@
-import QtQuick 2.0
+import QtQuick 2.12
 import "logical.js" as Logic
 
 Item {
     id: enemy
 
-    width:105
-    height:75
-
+    width: 105
+    height: 75
+    scale: 0.7
+    property int life: 1
     Image {
         id: imgModule
         fillMode: Image.Stretch
@@ -57,7 +58,7 @@ Item {
         id: enemy1
         width: 105
         height: 78
-        visible: false
+        visible: true
         sprites: Sprite {
             name: "enemy1"
             source: imgModule.source
@@ -107,10 +108,23 @@ Item {
         running: false
     }
 
-    NumberAnimation on y {
-        from: 0
-        to: parent.height + width
+    //    NumberAnimation on y {
+    //        from: 0
+    //        to: parent.height + width
+    //        duration: 4000
+    //        easing.type: Easing.InOutCubic
+    //        easing.amplitude: 2.0
+    //        easing.period: 1.5
+    //    }
+    PathAnimation {
+        id: pathAni
+        target: enemy
         duration: 8000
+        path: Path {
+            PathLine {relativeX: 0; relativeY: parent.height }
+          //  PathMove {relativeX: 0; relativeY: parent.height }
+        }
+
         easing.type: Easing.InOutCubic
         easing.amplitude: 2.0
         easing.period: 1.5
@@ -122,14 +136,17 @@ Item {
         switch (index) {
         case 1:
             enemy1.visible = true
+            life = 5
             //  enemy.jumpTo("enemy1")
             break
         case 2:
             enemy2.visible = true
+            life = 5
             //   enemy.jumpTo("enemy2")
             break
         case 3:
             enemy3.visible = true
+            life = 5
             //  enemy.jumpTo("enemy3")
             break
         default:
@@ -137,12 +154,18 @@ Item {
         }
     }
 
-    function die() {
-        destroy()
+    function die(inlife = 1) {
+        life-=inlife
+        if(life <= 0) {
+            destroy(30)
+            return true
+        }
+        return false
     }
 
     Component.onCompleted: {
         createEnemy()
+        pathAni.start()
     }
 }
 

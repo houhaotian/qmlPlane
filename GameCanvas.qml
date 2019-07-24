@@ -8,23 +8,26 @@ Item {
     property var enemies
     property var heroBullets
     property var enemyBullets
+    signal gameFailed
 
     //主任务
-    Timer{
+    Timer {
+        id: mainLoop
         interval: 100
         repeat: true
-        running: true
+        running: false
         onTriggered: {
             Logic.timerTask()
         }
     }
     //创建敌机
     Timer {
-        interval: 2000
+        id: createETimer
+        interval: 500
         repeat: true
-        running: true
+        running: false
         onTriggered: {
-            Logic.createEnemy()
+            var e = Logic.createEnemy()
         }
     }
 
@@ -34,11 +37,12 @@ Item {
 
     //发射敌机子弹
     Timer {
+        id: createEBullet
         interval: 1000
         repeat: true
-        running: true
+        running: false
         onTriggered: {
-            enemies.forEach(function(element) {
+            enemies.forEach(function (element) {
                 Logic.createEnemyBullet(element)
             })
         }
@@ -55,10 +59,39 @@ Item {
         }
     }
 
+    function startNewGame() {
+        mainLoop.start()
+        createETimer.start()
+        createEBullet.start()
+        hero.x = 217
+        hero.y = 563
+        hero.lives = 5
+        heroBulletCreate.running = true
+    }
+
+    function stopGame() {
+        mainLoop.stop()
+        createETimer.stop()
+        createEBullet.stop()
+        heroBulletCreate.running = false
+        destroyAllElement()
+        gameFailed()
+    }
+
+    function destroyAllElement() {
+        while(enemies.length > 0) {
+            enemies.pop().destroy()
+        }
+        while(heroBullets.length > 0) {
+            heroBullets.pop().destroy()
+        }
+        while(enemyBullets.length > 0) {
+            enemyBullets.pop().destroy()
+        }
+    }
+
     Component.onCompleted: {
         Logic.newGame(canvas)
         hero = Logic.createHero()
-        heroBulletCreate.running = true
     }
 }
-

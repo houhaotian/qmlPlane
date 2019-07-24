@@ -26,16 +26,17 @@ function createEnemy() {
     let Cox = Math.ceil(Math.random() * gameCanvas.width)
     let e = enemy.createObject(gameCanvas, {
                                    "x": Cox,
-                                   "y": 0
+                                   "y": 10
                                })
     gameCanvas.enemies.push(e)
     return e
 }
 
-function killhero(){
-    gameCanvas.hero.lives -= 1
+function killhero(life = 1) {
+    gameCanvas.hero.lives -= life
     if(gameCanvas.hero.lives <= 0){
         console.log("gameOver!")
+        gameCanvas.stopGame()
         return //gameOver
     }
 }
@@ -55,11 +56,26 @@ function timerTask() {
             if (isCollided(b, e)) {
                 gameCanvas.heroBullets.splice(j, 1)
                 b.destroy()
-                gameCanvas.enemies.splice(i, 1)
-                e.die()
+                if(e.die())
+                    gameCanvas.enemies.splice(i, 1)
             }
         }
     }
+
+    for (let i = 0; i < gameCanvas.enemyBullets.length; i++) {
+        let b = gameCanvas.enemyBullets[i]
+        //销毁子弹,出界销毁延时350，提升性能
+        if (isOutOfBoundry(b)) {
+            gameCanvas.enemyBullets.splice(i, 1)
+            b.destroy(350)
+        }
+        if (isCollided(b, gameCanvas.hero)) {
+            gameCanvas.enemyBullets.splice(i, 1)
+            b.destroy()
+            killhero()
+        }
+    }
+
     //再轮询敌机,处理敌机出界，与英雄碰撞情况
     //如将此次轮询放上面会导致英雄被频繁销毁
     //故暂且放在这再查询一遍
@@ -70,8 +86,8 @@ function timerTask() {
             e.die(350)
         }
         if (isCollided(gameCanvas.hero, e)) {
-            e.die()
-            killhero()
+            e.die(gameCanvas.hero.life)
+            killhero(e.life)
         }
     }
 }
@@ -93,10 +109,10 @@ function createHeroBullet() {
 
 function createEnemyBullet(e) {
     let b = bullet.createObject(gameCanvas, {
-                                    "x": e.x + 22,
-                                    "y": e.y - 20
+                                    "x": e.x + 45,
+                                    "y": e.y + 45
                                 })
-    b.createEnemyBullet()
+    b.createEnemyBullet(gameCanvas.hero.x, gameCanvas.hero.y)
     gameCanvas.enemyBullets.push(b)
     return b
 }
