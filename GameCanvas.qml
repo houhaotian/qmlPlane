@@ -1,3 +1,6 @@
+/*
+*游戏主要控制逻辑，资源管理放在这里
+*/
 import QtQuick 2.0
 import QtQml 2.0
 import "logical.js" as Logic
@@ -8,6 +11,8 @@ Item {
     property var enemies
     property var heroBullets
     property var enemyBullets
+    property int stage
+    property int gameTime: 0 //游戏走过的时间。用来控制难度变化
     signal gameFailed
 
     //主任务
@@ -23,7 +28,7 @@ Item {
     //创建敌机
     Timer {
         id: createETimer
-        interval: 500
+        interval: 900
         repeat: true
         running: false
         onTriggered: {
@@ -45,6 +50,9 @@ Item {
             enemies.forEach(function (element) {
                 Logic.createEnemyBullet(element)
             })
+
+            if(gameTime++ > 60 && state == "level0")
+                state = "level1"
         }
     }
 
@@ -67,6 +75,8 @@ Item {
         hero.y = 563
         hero.lives = 5
         heroBulletCreate.running = true
+        gameTime = 0
+        state="level0"
     }
 
     function stopGame() {
@@ -76,19 +86,56 @@ Item {
         heroBulletCreate.running = false
         destroyAllElement()
         gameFailed()
+        gameTime = 0
     }
 
     function destroyAllElement() {
-        while(enemies.length > 0) {
+        while (enemies.length > 0) {
             enemies.pop().destroy()
         }
-        while(heroBullets.length > 0) {
+        while (heroBullets.length > 0) {
             heroBullets.pop().destroy()
         }
-        while(enemyBullets.length > 0) {
+        while (enemyBullets.length > 0) {
             enemyBullets.pop().destroy()
         }
     }
+
+    function toTimeString() {
+        var hour = Math.floor(gameTime / 3600)
+        var min = Math.floor((gameTime / 60) % 60)
+        var sec = gameTime - hour * 3600 - min * 60
+        return "%1:%2:%3".arg(hour).arg(min).arg(sec)
+    }
+
+    states: [
+        State {
+            name: "level0"
+            PropertyChanges {
+                target: createETimer
+                interval: 900
+            }
+            PropertyChanges {
+                target: createEBullet
+                interval: 1000
+            }
+        },
+        State {
+            name: "level1"
+            PropertyChanges {
+                target: createETimer
+                interval: 750
+                onTriggered: {
+                    var e = Logic.createEnemy()
+                    e.setEnemyLife(5)
+                }
+            }
+            PropertyChanges {
+                target: createEBullet
+                interval: 850
+            }
+        }
+    ]
 
     Component.onCompleted: {
         Logic.newGame(canvas)

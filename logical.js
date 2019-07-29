@@ -22,18 +22,19 @@ function createHero() {
     return h
 }
 
-function createEnemy() {
+function createEnemy(level) {
     let Cox = Math.ceil(Math.random() * gameCanvas.width)
     let e = enemy.createObject(gameCanvas, {
                                    "x": Cox,
                                    "y": 10
                                })
+    e.createEnemy(level)
     gameCanvas.enemies.push(e)
     return e
 }
 
-function killhero(life = 1) {
-    gameCanvas.hero.lives -= life
+function killhero(killLife = 1) {
+    gameCanvas.hero.lives -= killLife
     if(gameCanvas.hero.lives <= 0){
         console.log("gameOver!")
         gameCanvas.stopGame()

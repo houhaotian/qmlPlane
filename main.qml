@@ -11,6 +11,7 @@
 **************************************************************/
 import QtQuick 2.0
 import QtQuick.Window 2.0
+import QtQuick.Controls 2.0
 
 Window {
     id: root
@@ -38,6 +39,20 @@ Window {
     LifeBar {
         id: lifeBar
         z: 0
+    }
+
+    Label {
+        id: timeLabel
+        x: 202
+        y: 0
+        width: 109
+        height: 22
+        color: "#ffffff"
+        text:canvas.toTimeString().slice(2, 8)
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        font.pixelSize: 16
+
     }
 
     GameCanvas {
