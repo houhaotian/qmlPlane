@@ -20,5 +20,7 @@
         <file>images/LOGO.png</file>
         <file>images/mainWindow.jpg</file>
         <file>AboutWindow.qml</file>
+        <file>ItemSprite.qml</file>
+        <file>images/img_item.png</file>
     </qresource>
 </RCC>

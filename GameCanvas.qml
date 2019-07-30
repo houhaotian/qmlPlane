@@ -11,6 +11,8 @@ Item {
     property var enemies
     property var heroBullets
     property var enemyBullets
+    property var items
+
     property int stage
     property int gameTime: 0 //游戏走过的时间。用来控制难度变化
     signal gameFailed

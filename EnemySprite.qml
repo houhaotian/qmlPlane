@@ -76,8 +76,8 @@ Item {
             name: "enemyBonus"
             source: imgModule.source
             frameCount: 1
-            frameWidth: 182
-            frameHeight: 138
+            frameWidth: 180
+            frameHeight: 135
             frameX: 187
             frameY: 339
             frameRate: 10
@@ -128,22 +128,32 @@ Item {
     }
 
     function createBonusPlane() {
-        setEnemyLife(20)
+        setEnemyLife(10)
         enemyBonus.visible = true
         enemy.width = enemyBonus.width
         enemy.height = enemyBonus.height
+        pathAni.start()
     }
 
     function setEnemyLife(setLife) {
         life = setLife
     }
 
-    function die(killLife = 1) {
-        life -= killLife
+    //返回值：0->没死，1->死了，2->bonus飞机死了
+    //如果killLife是undefined，直接销毁
+    function die(killLife) {
+        if(killLife === undefined)
+            life = 0
+        else
+            life -= killLife
+
         if(life <= 0) {
-            destroy(30)
-            return true
+            destroy()
+            if(enemyBonus.visible === true) {
+                return 2
+            }
+            return 1
         }
-        return false
+        return 0
     }
 }

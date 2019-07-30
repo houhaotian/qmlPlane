@@ -6,12 +6,16 @@ var hero = Qt.createComponent("HeroSprite.qml")
 var gameCanvas
 
 var bullet = Qt.createComponent("BulletSprite.qml")
+var upgrade = Qt.createComponent("ItemSprite.qml")
+
+var heroBulletLevel = 0
 
 function newGame(canvas) {
     gameCanvas = canvas
     gameCanvas.enemies = new Array
     gameCanvas.heroBullets = new Array
     gameCanvas.enemyBullets = new Array
+    gameCanvas.items = new Array
 }
 
 function createHero() {
@@ -44,6 +48,15 @@ function createBonusPlane() {
     return e
 }
 
+function createUpgrade(x, y) {
+    let item1 = upgrade.createObject(gameCanvas,{
+                             "x": x,
+                             "y": y
+                         })
+    item1.createUpgrade1()
+    gameCanvas.items.push(item1)
+}
+
 function killhero(killLife = 1) {
     gameCanvas.hero.lives -= killLife
     if(gameCanvas.hero.lives <= 0){
@@ -55,7 +68,7 @@ function killhero(killLife = 1) {
 
 function timerTask() {
     //轮询英雄子弹
-    for (let j = 0; j < gameCanvas.heroBullets.length; j++) {
+    for (let j in gameCanvas.heroBullets) {
         let b = gameCanvas.heroBullets[j]
         //销毁子弹,出界销毁延时350，提升性能
         if (isOutOfBoundry(b)) {
@@ -63,18 +76,23 @@ function timerTask() {
             b.destroy(350)
         }
         //子弹击中敌机时，销毁each
-        for (let i = 0; i < gameCanvas.enemies.length; i++) {
+        //创建bonus
+        for (let i in gameCanvas.enemies) {
             let e = gameCanvas.enemies[i]
             if (isCollided(b, e)) {
                 gameCanvas.heroBullets.splice(j, 1)
                 b.destroy()
-                if(e.die())
+                let x = e.x, y = e.y
+                let isBounus = e.die(1)
+                if(isBounus)
                     gameCanvas.enemies.splice(i, 1)
+                if(isBounus === 2)
+                    createUpgrade(x, y)
             }
         }
     }
 
-    for (let i = 0; i < gameCanvas.enemyBullets.length; i++) {
+    for (let i in gameCanvas.enemyBullets) {
         let b = gameCanvas.enemyBullets[i]
         //销毁子弹,出界销毁延时350，提升性能
         if (isOutOfBoundry(b)) {
@@ -91,32 +109,64 @@ function timerTask() {
     //再轮询敌机,处理敌机出界，与英雄碰撞情况
     //如将此次轮询放上面会导致英雄被频繁销毁
     //故暂且放在这再查询一遍
-    for (let i = 0; i < gameCanvas.enemies.length; i++) {
+    for (let i in gameCanvas.enemies) {
         let e = gameCanvas.enemies[i]
         if (isOutOfBoundry(e)) {
             gameCanvas.enemies.splice(i, 1)
-            e.die(350)
+            e.die()
         }
         if (isCollided(gameCanvas.hero, e)) {
-            e.die(gameCanvas.hero.life)
+            if(e.die(gameCanvas.hero.life))
+                 gameCanvas.enemies.splice(i, 1)
             killhero(e.life)
+        }
+    }
+
+    //处理item
+    for(let i in gameCanvas.items) {
+        let item1 = gameCanvas.items[i]
+        if(isOutOfBoundry(item1)){
+            item1.deleteItem()
+            gameCanvas.items.slice(i, 1)
+        }
+        if(isCollided(gameCanvas.hero, item1)) {
+            item1.deleteItem()
+            gameCanvas.items.slice(i, 1)
+            ++heroBulletLevel
         }
     }
 }
 
 function createHeroBullet() {
-    let b = bullet.createObject(gameCanvas, {
-                                    "x": gameCanvas.hero.x + 22,
-                                    "y": gameCanvas.hero.y - 20
-                                })
-    let b2 = bullet.createObject(gameCanvas, {
-                                     "x": gameCanvas.hero.x + 42,
-                                     "y": gameCanvas.hero.y - 20
-                                 })
-    b.createHeroBullet()
-    b2.createHeroBullet()
-    gameCanvas.heroBullets.push(b)
-    gameCanvas.heroBullets.push(b2)
+    switch(heroBulletLevel)
+    {
+    case 0:
+        let b = bullet.createObject(gameCanvas, {
+                                        "x": gameCanvas.hero.x + 32,
+                                        "y": gameCanvas.hero.y - 20
+                                    })
+        b.createHeroBullet()
+        gameCanvas.heroBullets.push(b)
+        break
+    case 1:
+        let b1 = bullet.createObject(gameCanvas, {
+                                        "x": gameCanvas.hero.x + 22,
+                                        "y": gameCanvas.hero.y - 20
+                                    })
+        let b2 = bullet.createObject(gameCanvas, {
+                                         "x": gameCanvas.hero.x + 42,
+                                         "y": gameCanvas.hero.y - 20
+                                     })
+        b1.createHeroBullet()
+        b2.createHeroBullet()
+        gameCanvas.heroBullets.push(b1)
+        gameCanvas.heroBullets.push(b2)
+        break
+    case 2:
+        break
+    default:
+        return
+    }
 }
 
 function createEnemyBullet(e) {
