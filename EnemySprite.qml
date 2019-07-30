@@ -3,9 +3,6 @@ import "logical.js" as Logic
 
 Item {
     id: enemy
-
-    width: 105
-    height: 75
     scale: 0.7
     property int life: 1
 
@@ -20,7 +17,7 @@ Item {
         id: enemy1
         width: 105
         height: 78
-        visible: true
+        visible: false
         sprites: Sprite {
             name: "enemy1"
             source: imgModule.source
@@ -70,6 +67,24 @@ Item {
         running: false
     }
 
+    SpriteSequence {
+        id: enemyBonus
+        width: 182
+        height: 138
+        visible: false
+        sprites: Sprite {
+            name: "enemyBonus"
+            source: imgModule.source
+            frameCount: 1
+            frameWidth: 182
+            frameHeight: 138
+            frameX: 187
+            frameY: 339
+            frameRate: 10
+        }
+        running: false
+    }
+
     PathAnimation {
         id: pathAni
         target: enemy
@@ -83,23 +98,40 @@ Item {
         easing.period: 1.5
     }
 
-    function createEnemy(index) {
-        if (index === undefined)
-            index = Math.ceil(Math.random() * 3)
+    function createEnemy(level) {
+        if(level!==undefined)
+            setEnemyLife(level)
+
+        let index = Math.ceil(Math.random() * 3)
+
         switch (index) {
         case 1:
             enemy1.visible = true
+            enemy.width = enemy1.width
+            enemy.height = enemy1.height
             break
         case 2:
             enemy2.visible = true
+            enemy.width = enemy2.width
+            enemy.height = enemy2.height
             break
         case 3:
             enemy3.visible = true
+            enemy.width = enemy3.width
+            enemy.height = enemy3.height
             break
         default:
             enemy0.visible = true
         }
+
         pathAni.start()
+    }
+
+    function createBonusPlane() {
+        setEnemyLife(20)
+        enemyBonus.visible = true
+        enemy.width = enemyBonus.width
+        enemy.height = enemyBonus.height
     }
 
     function setEnemyLife(setLife) {
@@ -114,13 +146,4 @@ Item {
         }
         return false
     }
-
-    Component.onCompleted: {
-    }
 }
-
-/*##^## Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
- ##^##*/
-

@@ -51,8 +51,12 @@ Item {
                 Logic.createEnemyBullet(element)
             })
 
-            if(gameTime++ > 60 && state == "level0")
+            if(gameTime++ > 60 && state == "level0") {
                 state = "level1"
+            }
+            if(gameTime % 5 == 0) {
+                let e = Logic.createBonusPlane()
+            }
         }
     }
 

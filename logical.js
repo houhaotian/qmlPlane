@@ -33,6 +33,17 @@ function createEnemy(level) {
     return e
 }
 
+function createBonusPlane() {
+    let Cox = Math.ceil(Math.random() * gameCanvas.width)
+    let e = enemy.createObject(gameCanvas, {
+                                   "x": Cox,
+                                   "y": 10
+                               })
+    e.createBonusPlane()
+    gameCanvas.enemies.push(e)
+    return e
+}
+
 function killhero(killLife = 1) {
     gameCanvas.hero.lives -= killLife
     if(gameCanvas.hero.lives <= 0){
