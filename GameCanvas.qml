@@ -53,11 +53,14 @@ Item {
                 Logic.createEnemyBullet(element)
             })
 
-            if(gameTime++ > 60 && state == "level0") {
+            if (gameTime++ > 60 && state == "level0") {
                 state = "level1"
             }
-            if(gameTime % 5 == 0) {
+            if (gameTime % 5 == 0) {
                 let e = Logic.createBonusPlane()
+            }
+            if (gameTime === 3) {
+                let boss1 = Logic.createBoss1()
             }
         }
     }
@@ -82,7 +85,7 @@ Item {
         hero.lives = 5
         heroBulletCreate.running = true
         gameTime = 0
-        state="level0"
+        state = "level0"
     }
 
     function stopGame() {
@@ -132,8 +135,7 @@ Item {
                 target: createETimer
                 interval: 750
                 onTriggered: {
-                    var e = Logic.createEnemy()
-                    e.setEnemyLife(5)
+                    var e = Logic.createEnemy(5)
                 }
             }
             PropertyChanges {

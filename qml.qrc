@@ -22,5 +22,6 @@
         <file>AboutWindow.qml</file>
         <file>ItemSprite.qml</file>
         <file>images/img_item.png</file>
+        <file>images/img_plane_boss.png</file>
     </qresource>
 </RCC>

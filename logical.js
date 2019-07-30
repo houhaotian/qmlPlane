@@ -57,6 +57,16 @@ function createUpgrade(x, y) {
     gameCanvas.items.push(item1)
 }
 
+function createBoss1() {
+    let boss1 = enemy.createObject(gameCanvas, {
+                                   "x": gameCanvas.width / 2,
+                                   "y": 10
+                               })
+    boss1.createBoss1()
+    gameCanvas.enemies.push(boss1)
+    return boss1
+}
+
 function killhero(killLife = 1) {
     gameCanvas.hero.lives -= killLife
     if(gameCanvas.hero.lives <= 0){

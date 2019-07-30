@@ -85,6 +85,24 @@ Item {
         running: false
     }
 
+    SpriteSequence {
+        id: boss1
+        width: 488
+        height: 293
+        visible: false
+        sprites: Sprite {
+            name: "boss1"
+            source:  "qrc:/images/img_plane_boss.png"
+            frameCount: 1
+            frameWidth: 488
+            frameHeight: 290
+            frameX: 0
+            frameY: 650
+            frameRate: 10
+        }
+        running: false
+    }
+
     PathAnimation {
         id: pathAni
         target: enemy
@@ -98,9 +116,9 @@ Item {
         easing.period: 1.5
     }
 
-    function createEnemy(level) {
-        if(level!==undefined)
-            setEnemyLife(level)
+    function createEnemy(enemyLife) {
+        if(enemyLife!==undefined)
+            setEnemyLife(enemyLife)
 
         let index = Math.ceil(Math.random() * 3)
 
@@ -139,6 +157,12 @@ Item {
         life = setLife
     }
 
+    function createBoss1() {
+        setEnemyLife(100)
+        boss1.visible = true
+        enemy.width = enemyBonus.width
+        enemy.height = enemyBonus.height
+    }
     //返回值：0->没死，1->死了，2->bonus飞机死了
     //如果killLife是undefined，直接销毁
     function die(killLife) {
@@ -157,3 +181,8 @@ Item {
         return 0
     }
 }
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/
