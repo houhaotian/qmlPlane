@@ -59,7 +59,7 @@ Item {
             if (gameTime % 5 == 0) {
                 let e = Logic.createBonusPlane()
             }
-            if (gameTime === 3) {
+            if (gameTime == 60) {
                 let boss1 = Logic.createBoss1()
             }
         }

@@ -51,30 +51,43 @@ Item {
         frameRate: 10
     }
 
+    //向上运动
     NumberAnimation on y {
-        id: heroBulletAni
+        id: heroBulletAni0
         running: false
         duration: 3000
         to: -parent.height
     }
 
-//    ParallelAnimation {
-//        id: enemyBulletAni
-//        running: false
-//        alwaysRunToEnd: true
-//        NumberAnimation {
-//            id: enemyBulletAniX
-//            target: root
-//            property: "x"
-//            duration: 3000
-//        }
-//        NumberAnimation {
-//            id: enemyBulletAniY
-//            target: root
-//            property: "y"
-//            duration: 3000
-//        }
-//    }
+    //左斜向上
+    PathAnimation {
+        id: heroBulletAni1
+        target: root
+        running: false
+        duration: 3000
+        path: Path {
+            PathLine {
+                relativeX: -parent.height * Math.tan(60);
+                relativeY: -parent.height
+            }
+        }
+
+    }
+
+    //右斜向上
+    PathAnimation {
+        id: heroBulletAni2
+        target: root
+        running: false
+        duration: 3000
+        path: Path {
+            PathLine {
+                relativeX: parent.height * Math.tan(60);
+                relativeY: -parent.height
+            }
+        }
+
+    }
 
     PathAnimation {
         id: enemyBulletAni
@@ -85,20 +98,29 @@ Item {
                 relativeX: 0;
                 relativeY: parent.height
             }
-          //  PathMove {relativeX: 0; relativeY: parent.height }
         }
-
-//        easing.type: Easing.InOutCubic
-//        easing.amplitude: 2.0
-//        easing.period: 1.5
     }
 
-
-    function createHeroBullet() {
+    //0向前，1左斜向上，2右斜向上
+    function createHeroBullet(index) {
         heroBullet.visible = true
         root.width = heroBullet.width
         root.height = heroBullet.height
-        heroBulletAni.start()
+
+        switch(index)
+        {
+        case 0:
+            heroBulletAni0.start()
+            break
+        case 1:
+            heroBulletAni1.start()
+            heroBullet.rotation = -30
+            break
+        case 2:
+            heroBulletAni2.start()
+            heroBullet.rotation = 30
+            break
+        }
     }
 
     function createEnemyBullet(heroX, heroY) {

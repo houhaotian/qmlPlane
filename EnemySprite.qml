@@ -100,6 +100,8 @@ Item {
             frameY: 650
             frameRate: 10
         }
+        scale: 0.6
+        rotation: 180
         running: false
     }
 
@@ -158,7 +160,7 @@ Item {
     }
 
     function createBoss1() {
-        setEnemyLife(100)
+        setEnemyLife(30)
         boss1.visible = true
         enemy.width = enemyBonus.width
         enemy.height = enemyBonus.height
@@ -166,12 +168,12 @@ Item {
     //返回值：0->没死，1->死了，2->bonus飞机死了
     //如果killLife是undefined，直接销毁
     function die(killLife) {
-        if(killLife === undefined)
+        if (killLife === undefined)
             life = 0
         else
             life -= killLife
 
-        if(life <= 0) {
+        if (life <= 0) {
             destroy()
             if(enemyBonus.visible === true) {
                 return 2

@@ -8,7 +8,7 @@ var gameCanvas
 var bullet = Qt.createComponent("BulletSprite.qml")
 var upgrade = Qt.createComponent("ItemSprite.qml")
 
-var heroBulletLevel = 0
+var heroBulletLevel = 0 //英雄子弹等级。最大5
 
 function newGame(canvas) {
     gameCanvas = canvas
@@ -49,7 +49,7 @@ function createBonusPlane() {
 }
 
 function createUpgrade(x, y) {
-    let item1 = upgrade.createObject(gameCanvas,{
+    let item1 = upgrade.createObject(gameCanvas, {
                              "x": x,
                              "y": y
                          })
@@ -59,7 +59,7 @@ function createUpgrade(x, y) {
 
 function createBoss1() {
     let boss1 = enemy.createObject(gameCanvas, {
-                                   "x": gameCanvas.width / 2,
+                                   "x": 80,
                                    "y": 10
                                })
     boss1.createBoss1()
@@ -135,13 +135,16 @@ function timerTask() {
     //处理item
     for(let i in gameCanvas.items) {
         let item1 = gameCanvas.items[i]
-        if(isOutOfBoundry(item1)){
+        if (isOutOfBoundry(item1)){
             item1.deleteItem()
             gameCanvas.items.slice(i, 1)
         }
-        if(isCollided(gameCanvas.hero, item1)) {
+        if (isCollided(gameCanvas.hero, item1)) {
             item1.deleteItem()
             gameCanvas.items.slice(i, 1)
+
+            if (heroBulletLevel > 5)
+                return
             ++heroBulletLevel
         }
     }
@@ -151,32 +154,76 @@ function createHeroBullet() {
     switch(heroBulletLevel)
     {
     case 0:
-        let b = bullet.createObject(gameCanvas, {
+        let b0 = bullet.createObject(gameCanvas, {
                                         "x": gameCanvas.hero.x + 32,
                                         "y": gameCanvas.hero.y - 20
                                     })
-        b.createHeroBullet()
-        gameCanvas.heroBullets.push(b)
+        b0.createHeroBullet(0)
+        gameCanvas.heroBullets.push(b0)
         break
     case 1:
-        let b1 = bullet.createObject(gameCanvas, {
-                                        "x": gameCanvas.hero.x + 22,
-                                        "y": gameCanvas.hero.y - 20
-                                    })
-        let b2 = bullet.createObject(gameCanvas, {
-                                         "x": gameCanvas.hero.x + 42,
-                                         "y": gameCanvas.hero.y - 20
-                                     })
-        b1.createHeroBullet()
-        b2.createHeroBullet()
-        gameCanvas.heroBullets.push(b1)
-        gameCanvas.heroBullets.push(b2)
+        _createHeroBullet1()
         break
     case 2:
+        _createHeroBullet1()
+        _createHeroBullet2()
         break
-    default:
-        return
+    case 3:
+        _createHeroBullet1()
+        _createHeroBullet2()
+        _createHeroBullet3()
+        break
+    case 4:
+        break
+    case 5:
+        break
+
     }
+}
+
+function _createHeroBullet1() {
+    let b1 = bullet.createObject(gameCanvas, {
+                                      "x": gameCanvas.hero.x + 22,
+                                      "y": gameCanvas.hero.y - 20
+                                  })
+    let b2 = bullet.createObject(gameCanvas, {
+                                      "x": gameCanvas.hero.x + 42,
+                                      "y": gameCanvas.hero.y - 20
+                                  })
+    b1.createHeroBullet(0)
+    b2.createHeroBullet(0)
+    gameCanvas.heroBullets.push(b1)
+    gameCanvas.heroBullets.push(b2)
+}
+
+function _createHeroBullet2() {
+    let b1 = bullet.createObject(gameCanvas, {
+                                      "x": gameCanvas.hero.x + 14,
+                                      "y": gameCanvas.hero.y - 20
+                                  })
+    let b2 = bullet.createObject(gameCanvas, {
+                                      "x": gameCanvas.hero.x + 50,
+                                      "y": gameCanvas.hero.y - 20
+                                  })
+    b1.createHeroBullet(1)
+    b2.createHeroBullet(2)
+    gameCanvas.heroBullets.push(b1)
+    gameCanvas.heroBullets.push(b2)
+}
+
+function _createHeroBullet3() {
+    let b1 = bullet.createObject(gameCanvas, {
+                                      "x": gameCanvas.hero.x + 14,
+                                      "y": gameCanvas.hero.y - 10
+                                  })
+    let b2 = bullet.createObject(gameCanvas, {
+                                      "x": gameCanvas.hero.x + 50,
+                                      "y": gameCanvas.hero.y - 10
+                                  })
+    b1.createHeroBullet(1)
+    b2.createHeroBullet(2)
+    gameCanvas.heroBullets.push(b1)
+    gameCanvas.heroBullets.push(b2)
 }
 
 function createEnemyBullet(e) {
