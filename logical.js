@@ -8,7 +8,7 @@ var gameCanvas
 var bullet = Qt.createComponent("BulletSprite.qml")
 var upgrade = Qt.createComponent("ItemSprite.qml")
 
-var heroBulletLevel = 0 //英雄子弹等级。最大5
+var heroBulletLevel = 0 //英雄子弹等级。最大4
 
 function newGame(canvas) {
     gameCanvas = canvas
@@ -143,7 +143,7 @@ function timerTask() {
             item1.deleteItem()
             gameCanvas.items.slice(i, 1)
 
-            if (heroBulletLevel > 5)
+            if (heroBulletLevel > 4)
                 return
             ++heroBulletLevel
         }
@@ -151,7 +151,7 @@ function timerTask() {
 }
 
 function createHeroBullet() {
-    switch(heroBulletLevel)
+    switch(4)
     {
     case 0:
         let b0 = bullet.createObject(gameCanvas, {
@@ -174,10 +174,11 @@ function createHeroBullet() {
         _createHeroBullet3()
         break
     case 4:
+        _createHeroBullet1()
+        _createHeroBullet2()
+        _createHeroBullet3()
+        _createHeroBullet4()
         break
-    case 5:
-        break
-
     }
 }
 
@@ -196,14 +197,15 @@ function _createHeroBullet1() {
     gameCanvas.heroBullets.push(b2)
 }
 
+//第一层30度
 function _createHeroBullet2() {
     let b1 = bullet.createObject(gameCanvas, {
-                                      "x": gameCanvas.hero.x + 14,
-                                      "y": gameCanvas.hero.y - 20
+                                      "x": gameCanvas.hero.x + 10,
+                                      "y": gameCanvas.hero.y - 15
                                   })
     let b2 = bullet.createObject(gameCanvas, {
-                                      "x": gameCanvas.hero.x + 50,
-                                      "y": gameCanvas.hero.y - 20
+                                      "x": gameCanvas.hero.x + 54,
+                                      "y": gameCanvas.hero.y - 15
                                   })
     b1.createHeroBullet(1)
     b2.createHeroBullet(2)
@@ -211,17 +213,34 @@ function _createHeroBullet2() {
     gameCanvas.heroBullets.push(b2)
 }
 
+//第二层30度
 function _createHeroBullet3() {
     let b1 = bullet.createObject(gameCanvas, {
-                                      "x": gameCanvas.hero.x + 9,
-                                      "y": gameCanvas.hero.y - 5
+                                      "x": gameCanvas.hero.x + 5,
+                                      "y": gameCanvas.hero.y + 5
                                   })
     let b2 = bullet.createObject(gameCanvas, {
-                                      "x": gameCanvas.hero.x + 55,
-                                      "y": gameCanvas.hero.y - 5
+                                      "x": gameCanvas.hero.x + 60,
+                                      "y": gameCanvas.hero.y + 5
                                   })
     b1.createHeroBullet(1)
     b2.createHeroBullet(2)
+    gameCanvas.heroBullets.push(b1)
+    gameCanvas.heroBullets.push(b2)
+}
+
+//第三层45度
+function _createHeroBullet4() {
+    let b1 = bullet.createObject(gameCanvas, {
+                                      "x": gameCanvas.hero.x,
+                                      "y": gameCanvas.hero.y
+                                  })
+    let b2 = bullet.createObject(gameCanvas, {
+                                      "x": gameCanvas.hero.x + 65,
+                                      "y": gameCanvas.hero.y
+                                  })
+    b1.createHeroBullet(3)
+    b2.createHeroBullet(4)
     gameCanvas.heroBullets.push(b1)
     gameCanvas.heroBullets.push(b2)
 }

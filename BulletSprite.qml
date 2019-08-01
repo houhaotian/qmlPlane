@@ -59,7 +59,7 @@ Item {
         to: -parent.height
     }
 
-    //左斜向上
+    //左斜向上60度
     PathAnimation {
         id: heroBulletAni1
         target: root
@@ -71,10 +71,9 @@ Item {
                 relativeY: -parent.height
             }
         }
-
     }
 
-    //右斜向上
+    //右斜向上60度
     PathAnimation {
         id: heroBulletAni2
         target: root
@@ -86,7 +85,35 @@ Item {
                 relativeY: -parent.height
             }
         }
+    }
 
+
+    //左斜向上75度
+    PathAnimation {
+        id: heroBulletAni3
+        target: root
+        running: false
+        duration: 3000
+        path: Path {
+            PathLine {
+                relativeX: -parent.height * Math.tan(45);
+                relativeY: -parent.height
+            }
+        }
+    }
+
+    //右斜向上75度
+    PathAnimation {
+        id: heroBulletAni4
+        target: root
+        running: false
+        duration: 3000
+        path: Path {
+            PathLine {
+                relativeX: parent.height * Math.tan(45);
+                relativeY: -parent.height
+            }
+        }
     }
 
     PathAnimation {
@@ -119,6 +146,14 @@ Item {
         case 2:
             heroBulletAni2.start()
             heroBullet.rotation = 30
+            break
+        case 3:
+            heroBulletAni3.start()
+            heroBullet.rotation = -45
+            break
+        case 4:
+            heroBulletAni4.start()
+            heroBullet.rotation = 45
             break
         }
     }
