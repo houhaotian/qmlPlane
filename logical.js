@@ -213,12 +213,12 @@ function _createHeroBullet2() {
 
 function _createHeroBullet3() {
     let b1 = bullet.createObject(gameCanvas, {
-                                      "x": gameCanvas.hero.x + 14,
-                                      "y": gameCanvas.hero.y - 10
+                                      "x": gameCanvas.hero.x + 9,
+                                      "y": gameCanvas.hero.y - 5
                                   })
     let b2 = bullet.createObject(gameCanvas, {
-                                      "x": gameCanvas.hero.x + 50,
-                                      "y": gameCanvas.hero.y - 10
+                                      "x": gameCanvas.hero.x + 55,
+                                      "y": gameCanvas.hero.y - 5
                                   })
     b1.createHeroBullet(1)
     b2.createHeroBullet(2)
