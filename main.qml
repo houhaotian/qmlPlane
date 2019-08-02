@@ -48,11 +48,23 @@ Window {
         width: 109
         height: 22
         color: "#ffffff"
-        text:canvas.toTimeString().slice(2, 8)
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: 16
+        text:canvas.toTimeString().slice(2, 8)
+    }
 
+    Label {
+        id: score
+        x: 418
+        y: 0
+        width: 94
+        height: 22
+        color: "#ffffff"
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        font.pixelSize: 16
+        text: canvas.gameScore.toString()
     }
 
     GameCanvas {
@@ -78,4 +90,3 @@ Window {
     D{i:1;anchors_height:100;anchors_width:100;anchors_x:228;anchors_y:181}D{i:3;anchors_height:141;anchors_width:248;anchors_x:154;anchors_y:475}
 }
  ##^##*/
-

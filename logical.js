@@ -94,10 +94,20 @@ function timerTask() {
                 b.destroy()
                 let x = e.x, y = e.y
                 let isBounus = e.die(1)
-                if(isBounus)
+                if(isBounus) {
                     gameCanvas.enemies.splice(i, 1)
-                if(isBounus === 2)
+                    gameCanvas.gameScore += 200
+                }
+
+                if(isBounus === 2) {
                     createUpgrade(x, y)
+                    gameCanvas.gameScore += 300
+                }
+
+                if(isBounus === 3) {
+                    createUpgrade(x, y)
+                    gameCanvas.gameScore += 1000
+                }
             }
         }
     }
@@ -126,8 +136,10 @@ function timerTask() {
             e.die()
         }
         if (isCollided(gameCanvas.hero, e)) {
-            if(e.die(gameCanvas.hero.life))
-                 gameCanvas.enemies.splice(i, 1)
+            if(e.die(gameCanvas.hero.life)) {
+                gameCanvas.enemies.splice(i, 1)
+                gameCanvas.gameScore += 200
+            }
             killhero(e.life)
         }
     }

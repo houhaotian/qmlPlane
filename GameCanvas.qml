@@ -15,6 +15,7 @@ Item {
 
     property int stage
     property int gameTime: 0 //游戏走过的时间。用来控制难度变化
+    property int gameScore: 0
     signal gameFailed
 
     //主任务
@@ -56,7 +57,7 @@ Item {
             if (gameTime++ > 60 && state == "level0") {
                 state = "level1"
             }
-            if (gameTime % 5 == 0) {
+            if (gameTime % 30 == 0) {
                 let e = Logic.createBonusPlane()
             }
             if (gameTime == 60) {

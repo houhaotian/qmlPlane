@@ -108,12 +108,12 @@ Item {
     PathAnimation {
         id: pathAni
         target: enemy
-        duration: 8000
+        duration: 5000
         path: Path {
            // PathLine {relativeX: 0; relativeY: parent.height }
             PathQuad {
             id: quad
-                x: 0; y: 0; controlX: 500; controlY: 500
+                x: 10; y: -50; controlX: 500; controlY: 500
             }
         }
 
@@ -169,7 +169,7 @@ Item {
         enemy.width = enemyBonus.width
         enemy.height = enemyBonus.height
     }
-    //返回值：0->没死，1->死了，2->bonus飞机死了
+    //返回值：0->没死，1->死了，2->bonus飞机死了, 3->boss死了
     //如果killLife是undefined，直接销毁
     function die(killLife) {
         if (killLife === undefined)
@@ -181,6 +181,9 @@ Item {
             destroy()
             if(enemyBonus.visible === true) {
                 return 2
+            }
+            else if(boss1.visible === true) {
+                return 3
             }
             return 1
         }

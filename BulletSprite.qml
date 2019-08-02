@@ -56,7 +56,8 @@ Item {
         id: heroBulletAni0
         running: false
         duration: 3000
-        to: -parent.height
+        to: -500
+        loops: Animation.Infinite
     }
 
     //左斜向上60度
@@ -123,9 +124,10 @@ Item {
         path: Path {
             PathLine {
                 relativeX: 0;
-                relativeY: parent.height
+                relativeY: 800
             }
         }
+        loops: Animation.Infinite
     }
 
     //0向前，1左斜向上，2右斜向上
