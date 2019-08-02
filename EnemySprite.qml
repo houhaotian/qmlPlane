@@ -110,7 +110,11 @@ Item {
         target: enemy
         duration: 8000
         path: Path {
-            PathLine {relativeX: 0; relativeY: parent.height }
+           // PathLine {relativeX: 0; relativeY: parent.height }
+            PathQuad {
+            id: quad
+                x: 0; y: 0; controlX: 500; controlY: 500
+            }
         }
 
         easing.type: Easing.InOutCubic

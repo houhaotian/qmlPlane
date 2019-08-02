@@ -151,7 +151,7 @@ function timerTask() {
 }
 
 function createHeroBullet() {
-    switch(4)
+    switch(heroBulletLevel)
     {
     case 0:
         let b0 = bullet.createObject(gameCanvas, {
